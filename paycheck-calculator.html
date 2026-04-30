@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paycheck Calculator 2026 – Free Take-Home Pay Calculator</title>
+<meta name="description" content="Free paycheck calculator for 2026. Calculate your take-home pay after federal tax, state tax, Social Security and Medicare. Updated with 2026 IRS tax brackets.">
+<meta name="keywords" content="paycheck calculator, take home pay calculator, salary calculator, tax calculator 2026, net pay calculator, hourly to salary calculator, paycheck after taxes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0e14;
+  --surface: #141820;
+  --surface-2: #1c2230;
+  --surface-3: #242a38;
+  --border: #2a3040;
+  --text: #e4e8f0;
+  --text-2: #9aa0b4;
+  --green: #34d399;
+  --green-bg: rgba(52,211,153,0.08);
+  --green-border: rgba(52,211,153,0.18);
+  --blue: #60a5fa;
+  --amber: #fbbf24;
+  --red: #f87171;
+  --purple: #a78bfa;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow-x:hidden;width:100%}
+body{font-family:'Instrument Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+/* HEADER */
+header{text-align:center;padding:40px 20px 28px;position:relative}
+header::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:100%;max-width:600px;height:400px;background:radial-gradient(ellipse,rgba(52,211,153,0.05) 0%,transparent 70%);pointer-events:none}
+.brand{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:12px;position:relative}
+h1{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.2;margin-bottom:10px;position:relative}
+h1 span{color:var(--green)}
+header>p{color:var(--text-2);font-size:14px;max-width:480px;margin:0 auto;position:relative;line-height:1.6}
+
+/* AD */
+.ad-slot{max-width:100%;margin:20px 16px;padding:14px;background:var(--surface);border:1px dashed var(--border);border-radius:8px;text-align:center;color:var(--text-2);font-size:11px;letter-spacing:1px;text-transform:uppercase}
+@media(min-width:760px){.ad-slot{max-width:728px;margin:20px auto}}
+
+/* LAYOUT */
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 50px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.full{grid-column:1/-1}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px;overflow:hidden}
+@media(min-width:700px){.card{padding:24px}}
+.card-head{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block}
+.dot-g{background:var(--green)}
+.dot-b{background:var(--blue)}
+.dot-a{background:var(--amber)}
+
+/* FORM */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-2);margin-bottom:6px}
+.iw{position:relative;display:flex;align-items:center}
+.iw .pre,.iw .suf{position:absolute;font-size:13px;color:var(--text-2);pointer-events:none;font-weight:500}
+.iw .pre{left:12px}
+.iw .suf{right:12px}
+input[type=number],select{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:11px 12px;font-size:15px;font-family:'Instrument Sans',sans-serif;color:var(--text);outline:none;transition:border .2s}
+input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px var(--green-bg)}
+input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+input[type=number]{-moz-appearance:textfield}
+.has-pre input{padding-left:28px}
+.has-suf input{padding-right:28px}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%239aa0b4'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
+
+/* RADIO GROUP */
+.radio-row{display:flex;gap:6px;margin-bottom:16px}
+.radio-row label{flex:1;text-align:center;padding:9px 4px;font-size:12px;font-weight:600;border-radius:8px;border:1px solid var(--border);cursor:pointer;transition:all .2s;color:var(--text-2)}
+.radio-row input{display:none}
+.radio-row input:checked+label{background:var(--green-bg);border-color:var(--green-border);color:var(--green)}
+
+/* BTN */
+.btn{width:100%;padding:13px;border:none;border-radius:9px;background:var(--green);color:var(--bg);font-family:'Instrument Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:transform .12s,box-shadow .2s;letter-spacing:.5px;margin-top:4px}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(52,211,153,.25)}
+.btn:active{transform:translateY(0)}
+
+/* RESULTS */
+.r-hidden{display:none}
+.r-show{display:block!important}
+.hero-result{text-align:center;padding:20px;background:linear-gradient(135deg,rgba(52,211,153,.08),rgba(96,165,250,.06));border:1px solid var(--green-border);border-radius:12px;margin-bottom:16px}
+.hero-result .lab{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-2);margin-bottom:4px}
+.hero-result .val{font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,44px);font-weight:800;color:var(--green)}
+.hero-result .sub{font-size:12px;color:var(--text-2);margin-top:4px}
+.r-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+@media(max-width:400px){.r-grid{grid-template-columns:1fr}}
+.r-box{background:var(--surface-2);border-radius:10px;padding:14px}
+.r-box .lab{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-2);margin-bottom:2px}
+.r-box .val{font-family:'Playfair Display',serif;font-size:20px;font-weight:700}
+.r-box .val.red{color:var(--red)}
+.r-box .val.blue{color:var(--blue)}
+.r-box .val.amber{color:var(--amber)}
+.r-box .val.purple{color:var(--purple)}
+
+/* BAR */
+.bar-wrap{margin-top:12px}
+.bar-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-bottom:4px}
+.bar-track{height:10px;background:var(--surface-3);border-radius:5px;overflow:hidden;display:flex}
+.bar-seg{height:100%;transition:width .5s ease}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin-top:10px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:480px}
+th{text-align:left;padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text-2);border-bottom:1px solid var(--border);font-weight:600;white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td.g{color:var(--green)}
+td.r{color:var(--red)}
+
+/* SEO */
+.seo{max-width:920px;margin:0 auto;padding:30px 16px 50px}
+.seo h2{font-family:'Playfair Display',serif;font-size:20px;margin-bottom:12px}
+.seo p{color:var(--text-2);font-size:14px;line-height:1.8;margin-bottom:14px;max-width:680px}
+
+/* FOOTER */
+footer{text-align:center;padding:28px 16px;color:var(--text-2);font-size:12px;border-top:1px solid var(--border);max-width:920px;margin:0 auto}
+footer a{color:var(--text-2);text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">PayCalc</div>
+  <h1>Paycheck <span>Calculator</span> 2026</h1>
+  <p>How much will you actually take home? Enter your salary and see your net pay after federal tax, state tax, Social Security &amp; Medicare.</p>
+</header>
+
+<div class="ad-slot">— Ad Space (728×90) — Your Google AdSense code here —</div>
+
+<div class="wrap">
+<div class="grid">
+
+<!-- INPUT -->
+<div class="card">
+<div class="card-head"><span class="dot dot-g"></span> Your Income</div>
+
+<div class="field"><label>Pay Type</label></div>
+<div class="radio-row">
+  <input type="radio" name="paytype" id="pt_annual" value="annual" checked><label for="pt_annual">Annual Salary</label>
+  <input type="radio" name="paytype" id="pt_hourly" value="hourly"><label for="pt_hourly">Hourly Rate</label>
+</div>
+
+<div class="field" id="salaryField">
+  <label>Annual Salary</label>
+  <div class="iw has-pre"><span class="pre">$</span><input type="number" id="salary" value="65000" min="0" step="1000"></div>
+</div>
+
+<div class="field" id="hourlyField" style="display:none">
+  <label>Hourly Rate</label>
+  <div class="iw has-pre"><span class="pre">$</span><input type="number" id="hourly" value="25" min="0" step="0.5"></div>
+</div>
+<div class="field" id="hoursField" style="display:none">
+  <label>Hours Per Week</label>
+  <div class="iw"><input type="number" id="hours" value="40" min="1" max="80" step="1"></div>
+</div>
+
+<div class="field">
+  <label>Pay Frequency</label>
+  <select id="freq">
+    <option value="26" selected>Bi-Weekly (every 2 weeks)</option>
+    <option value="52">Weekly</option>
+    <option value="24">Semi-Monthly (2x/month)</option>
+    <option value="12">Monthly</option>
+  </select>
+</div>
+
+<div class="field">
+  <label>Filing Status</label>
+  <select id="filing">
+    <option value="single" selected>Single</option>
+    <option value="married">Married Filing Jointly</option>
+    <option value="hoh">Head of Household</option>
+  </select>
+</div>
+
+<div class="field">
+  <label>State</label>
+  <select id="state"></select>
+</div>
+
+<button class="btn" onclick="calc()">Calculate Take-Home Pay</button>
+</div>
+
+<!-- RESULTS -->
+<div class="card">
+<div class="card-head"><span class="dot dot-b"></span> Your Take-Home Pay</div>
+
+<div id="placeholder" style="text-align:center;padding:50px 0;color:var(--text-2);font-size:13px">
+  Enter your income details<br>and press <strong>Calculate</strong>
+</div>
+
+<div id="results" class="r-hidden">
+  <div class="hero-result">
+    <div class="lab">Per Paycheck</div>
+    <div class="val" id="rPaycheck">$0</div>
+    <div class="sub" id="rFreqLabel">Bi-Weekly</div>
+  </div>
+
+  <div class="r-grid">
+    <div class="r-box"><div class="lab">Annual Gross</div><div class="val" id="rGross">$0</div></div>
+    <div class="r-box"><div class="lab">Annual Net</div><div class="val" id="rNet" style="color:var(--green)">$0</div></div>
+    <div class="r-box"><div class="lab">Federal Tax</div><div class="val red" id="rFed">$0</div></div>
+    <div class="r-box"><div class="lab">State Tax</div><div class="val purple" id="rState">$0</div></div>
+    <div class="r-box"><div class="lab">Social Security</div><div class="val amber" id="rSS">$0</div></div>
+    <div class="r-box"><div class="lab">Medicare</div><div class="val blue" id="rMed">$0</div></div>
+  </div>
+
+  <div class="bar-wrap">
+    <div class="bar-label"><span>Take-Home</span><span>Taxes & Deductions</span></div>
+    <div class="bar-track">
+      <div class="bar-seg" id="barNet" style="background:var(--green);width:70%"></div>
+      <div class="bar-seg" id="barFed" style="background:var(--red);width:10%"></div>
+      <div class="bar-seg" id="barState" style="background:var(--purple);width:5%"></div>
+      <div class="bar-seg" id="barSS" style="background:var(--amber);width:10%"></div>
+      <div class="bar-seg" id="barMed" style="background:var(--blue);width:5%"></div>
+    </div>
+  </div>
+
+  <div style="margin-top:14px;font-size:11px;color:var(--text-2)">
+    <strong>Effective Tax Rate:</strong> <span id="rEffective">0%</span> · 
+    <strong>Monthly Net:</strong> <span id="rMonthly">$0</span>
+  </div>
+</div>
+</div>
+
+<!-- AD 2 -->
+<div class="ad-slot full">— Ad Space (728×90) — Your Google AdSense code here —</div>
+
+<!-- BREAKDOWN TABLE -->
+<div class="card full" id="tableCard" style="display:none">
+<div class="card-head"><span class="dot dot-a"></span> Detailed Breakdown</div>
+<div class="tbl-wrap">
+<table>
+<thead><tr><th>Deduction</th><th>Per Paycheck</th><th>Monthly</th><th>Annual</th><th>Rate</th></tr></thead>
+<tbody id="tBody"></tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- SEO CONTENT -->
+<div class="seo">
+<h2>How Does This Paycheck Calculator Work?</h2>
+<p>This calculator estimates your take-home pay by subtracting federal income tax, state income tax, Social Security tax (6.2%), and Medicare tax (1.45%) from your gross income. It uses the 2026 federal tax brackets released by the IRS, including updates from the One Big Beautiful Bill Act.</p>
+
+<h2>2026 Federal Tax Brackets</h2>
+<p>The federal income tax has seven brackets in 2026: 10%, 12%, 22%, 24%, 32%, 35%, and 37%. Your filing status (single, married filing jointly, or head of household) determines which bracket thresholds apply. The standard deduction for 2026 is $16,100 for single filers and $32,200 for married couples filing jointly.</p>
+
+<div class="ad-slot">— Ad Space (300×250) — Your Google AdSense code here —</div>
+
+<h2>What Is FICA Tax?</h2>
+<p>FICA stands for the Federal Insurance Contributions Act. It includes Social Security tax (6.2% on income up to $176,100 in 2026) and Medicare tax (1.45% on all income, plus an additional 0.9% on income over $200,000 for single filers). Your employer pays a matching amount.</p>
+
+<h2>States With No Income Tax</h2>
+<p>Nine states have no state income tax: Alaska, Florida, Nevada, New Hampshire, South Dakota, Tennessee, Texas, Washington, and Wyoming. If you live in one of these states, your take-home pay will be higher because only federal taxes and FICA are deducted.</p>
+</div>
+
+<footer>
+  &copy; 2026 PayCalc — Free Paycheck &amp; Salary Calculator |
+  <a href="#">Privacy</a> | <a href="#">Terms</a>
+</footer>
+
+<script>
+// ============================================================
+// 2026 FEDERAL TAX DATA (IRS Revenue Procedure 2025-32)
+// ============================================================
+const FED_BRACKETS = {
+  single: [
+    [12400, 0.10], [50200, 0.12], [108350, 0.22], [191950, 0.24],
+    [249350, 0.32], [609350, 0.35], [Infinity, 0.37]
+  ],
+  married: [
+    [24800, 0.10], [100400, 0.12], [201700, 0.22], [383450, 0.24],
+    [487200, 0.32], [768600, 0.35], [Infinity, 0.37]
+  ],
+  hoh: [
+    [17650, 0.10], [67100, 0.12], [108350, 0.22], [191950, 0.24],
+    [249350, 0.32], [609350, 0.35], [Infinity, 0.37]
+  ]
+};
+
+const STD_DEDUCTION = { single: 16100, married: 32200, hoh: 24150 };
+
+const SS_RATE = 0.062;
+const SS_CAP = 176100;
+const MEDICARE_RATE = 0.0145;
+const MEDICARE_SURTAX = 0.009;
+const MEDICARE_SURTAX_THRESHOLD = { single: 200000, married: 250000, hoh: 200000 };
+
+// Simplified state tax rates (flat/effective approximation)
+const STATES = {
+  "Alabama": 0.04, "Alaska": 0, "Arizona": 0.025, "Arkansas": 0.039,
+  "California": 0.065, "Colorado": 0.044, "Connecticut": 0.055,
+  "Delaware": 0.055, "Florida": 0, "Georgia": 0.0549,
+  "Hawaii": 0.065, "Idaho": 0.058, "Illinois": 0.0495,
+  "Indiana": 0.0305, "Iowa": 0.038, "Kansas": 0.046,
+  "Kentucky": 0.04, "Louisiana": 0.03, "Maine": 0.06,
+  "Maryland": 0.05, "Massachusetts": 0.05, "Michigan": 0.0425,
+  "Minnesota": 0.06, "Mississippi": 0.047, "Missouri": 0.048,
+  "Montana": 0.059, "Nebraska": 0.056, "Nevada": 0,
+  "New Hampshire": 0, "New Jersey": 0.055, "New Mexico": 0.045,
+  "New York": 0.06, "North Carolina": 0.045, "North Dakota": 0.0195,
+  "Ohio": 0.035, "Oklahoma": 0.0425, "Oregon": 0.08,
+  "Pennsylvania": 0.0307, "Rhode Island": 0.05, "South Carolina": 0.05,
+  "South Dakota": 0, "Tennessee": 0, "Texas": 0,
+  "Utah": 0.0465, "Vermont": 0.06, "Virginia": 0.05,
+  "Washington": 0, "West Virginia": 0.05, "Wisconsin": 0.053,
+  "Wyoming": 0, "District of Columbia": 0.065
+};
+
+// Populate state dropdown
+const stateSel = document.getElementById('state');
+Object.keys(STATES).forEach(s => {
+  const o = document.createElement('option');
+  o.value = s; o.textContent = s + (STATES[s] === 0 ? ' (No State Tax)' : '');
+  if (s === 'Indiana') o.selected = true;
+  stateSel.appendChild(o);
+});
+
+// Pay type toggle
+document.querySelectorAll('input[name=paytype]').forEach(r => {
+  r.addEventListener('change', () => {
+    const isHourly = r.value === 'hourly' && r.checked;
+    document.getElementById('salaryField').style.display = isHourly ? 'none' : '';
+    document.getElementById('hourlyField').style.display = isHourly ? '' : 'none';
+    document.getElementById('hoursField').style.display = isHourly ? '' : 'none';
+  });
+});
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+function pct(n) { return (n * 100).toFixed(1) + '%'; }
+
+function calcFederalTax(taxableIncome, filing) {
+  const brackets = FED_BRACKETS[filing];
+  let tax = 0, prev = 0;
+  for (const [limit, rate] of brackets) {
+    if (taxableIncome <= prev) break;
+    const taxable = Math.min(taxableIncome, limit) - prev;
+    tax += taxable * rate;
+    prev = limit;
+  }
+  return tax;
+}
+
+function calc() {
+  const isHourly = document.getElementById('pt_hourly').checked;
+  let gross;
+  if (isHourly) {
+    const rate = parseFloat(document.getElementById('hourly').value) || 0;
+    const hrs = parseFloat(document.getElementById('hours').value) || 40;
+    gross = rate * hrs * 52;
+  } else {
+    gross = parseFloat(document.getElementById('salary').value) || 0;
+  }
+
+  const freq = parseInt(document.getElementById('freq').value);
+  const filing = document.getElementById('filing').value;
+  const state = document.getElementById('state').value;
+  const stateRate = STATES[state] || 0;
+
+  // Federal tax
+  const stdDed = STD_DEDUCTION[filing];
+  const taxableIncome = Math.max(0, gross - stdDed);
+  const fedTax = calcFederalTax(taxableIncome, filing);
+
+  // FICA
+  const ssTax = Math.min(gross, SS_CAP) * SS_RATE;
+  const threshold = MEDICARE_SURTAX_THRESHOLD[filing];
+  let medTax = gross * MEDICARE_RATE;
+  if (gross > threshold) medTax += (gross - threshold) * MEDICARE_SURTAX;
+
+  // State tax (simplified)
+  const stateTax = gross * stateRate;
+
+  // Totals
+  const totalTax = fedTax + ssTax + medTax + stateTax;
+  const netAnnual = gross - totalTax;
+  const perPaycheck = netAnnual / freq;
+
+  // Update UI
+  document.getElementById('placeholder').style.display = 'none';
+  document.getElementById('results').classList.add('r-show');
+  document.getElementById('tableCard').style.display = '';
+
+  const freqLabels = { 52: 'Weekly', 26: 'Bi-Weekly', 24: 'Semi-Monthly', 12: 'Monthly' };
+  document.getElementById('rPaycheck').textContent = fmt(perPaycheck);
+  document.getElementById('rFreqLabel').textContent = freqLabels[freq] || '';
+  document.getElementById('rGross').textContent = fmt(gross);
+  document.getElementById('rNet').textContent = fmt(netAnnual);
+  document.getElementById('rFed').textContent = '-' + fmt(fedTax);
+  document.getElementById('rState').textContent = '-' + fmt(stateTax);
+  document.getElementById('rSS').textContent = '-' + fmt(ssTax);
+  document.getElementById('rMed').textContent = '-' + fmt(medTax);
+  document.getElementById('rEffective').textContent = gross > 0 ? pct(totalTax / gross) : '0%';
+  document.getElementById('rMonthly').textContent = fmt(netAnnual / 12);
+
+  // Bar
+  if (gross > 0) {
+    document.getElementById('barNet').style.width = pct(netAnnual / gross);
+    document.getElementById('barFed').style.width = pct(fedTax / gross);
+    document.getElementById('barState').style.width = pct(stateTax / gross);
+    document.getElementById('barSS').style.width = pct(ssTax / gross);
+    document.getElementById('barMed').style.width = pct(medTax / gross);
+  }
+
+  // Table
+  const rows = [
+    ['Gross Pay', gross / freq, gross / 12, gross, '—'],
+    ['Federal Income Tax', -fedTax / freq, -fedTax / 12, -fedTax, gross > 0 ? pct(fedTax / gross) : '0%'],
+    ['State Tax (' + state + ')', -stateTax / freq, -stateTax / 12, -stateTax, pct(stateRate)],
+    ['Social Security', -ssTax / freq, -ssTax / 12, -ssTax, '6.2%'],
+    ['Medicare', -medTax / freq, -medTax / 12, -medTax, gross > 0 ? pct(medTax / gross) : '1.45%'],
+    ['Take-Home Pay', perPaycheck, netAnnual / 12, netAnnual, '—']
+  ];
+
+  document.getElementById('tBody').innerHTML = rows.map((r, i) => {
+    const cls = i === 0 ? '' : i === rows.length - 1 ? 'g' : 'r';
+    return `<tr>
+      <td><strong>${r[0]}</strong></td>
+      <td class="${cls}">${fmt(r[1])}</td>
+      <td class="${cls}">${fmt(r[2])}</td>
+      <td class="${cls}">${fmt(r[3])}</td>
+      <td>${r[4]}</td>
+    </tr>`;
+  }).join('');
+}
+
+// Auto-calculate on load
+calc();
+</script>
+</body>
+</html>
