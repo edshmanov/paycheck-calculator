@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1798524896332079"
-     crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paycheck Calculator 2026 – Free Take-Home Pay Calculator</title>
@@ -159,8 +157,13 @@ footer a{color:var(--text-2);text-decoration:none}
   <div class="iw has-pre"><span class="pre">$</span><input type="number" id="hourly" value="25" min="0" step="0.5"></div>
 </div>
 <div class="field" id="hoursField" style="display:none">
-  <label>Hours Per Week</label>
+  <label>Regular Hours Per Week</label>
   <div class="iw"><input type="number" id="hours" value="40" min="1" max="80" step="1"></div>
+</div>
+
+<div class="field" id="otHoursField" style="display:none">
+  <label>Overtime Hours Per Week <span style="color:var(--amber);font-size:10px;font-weight:600;letter-spacing:1px">&nbsp;1.5×</span></label>
+  <div class="iw"><input type="number" id="otHours" value="0" min="0" max="40" step="1"></div>
 </div>
 
 <div class="field">
@@ -335,6 +338,7 @@ document.querySelectorAll('input[name=paytype]').forEach(r => {
     document.getElementById('salaryField').style.display = isHourly ? 'none' : '';
     document.getElementById('hourlyField').style.display = isHourly ? '' : 'none';
     document.getElementById('hoursField').style.display = isHourly ? '' : 'none';
+    document.getElementById('otHoursField').style.display = isHourly ? '' : 'none';
   });
 });
 
@@ -359,7 +363,10 @@ function calc() {
   if (isHourly) {
     const rate = parseFloat(document.getElementById('hourly').value) || 0;
     const hrs = parseFloat(document.getElementById('hours').value) || 40;
-    gross = rate * hrs * 52;
+    const otHrs = parseFloat(document.getElementById('otHours').value) || 0;
+    const regularGross = rate * hrs * 52;
+    const otGross = rate * 1.5 * otHrs * 52;
+    gross = regularGross + otGross;
   } else {
     gross = parseFloat(document.getElementById('salary').value) || 0;
   }
@@ -415,7 +422,12 @@ function calc() {
   }
 
   // Table
+  const otHrs = parseFloat(document.getElementById('otHours')?.value) || 0;
+  const rate = parseFloat(document.getElementById('hourly')?.value) || 0;
+  const otGross = isHourly && otHrs > 0 ? rate * 1.5 * otHrs * 52 : 0;
   const rows = [
+    ['Regular Pay', (gross - otGross) / freq, (gross - otGross) / 12, gross - otGross, '—'],
+    ...(otGross > 0 ? [['Overtime Pay (1.5×)', otGross / freq, otGross / 12, otGross, '×1.5']] : []),
     ['Gross Pay', gross / freq, gross / 12, gross, '—'],
     ['Federal Income Tax', -fedTax / freq, -fedTax / 12, -fedTax, gross > 0 ? pct(fedTax / gross) : '0%'],
     ['State Tax (' + state + ')', -stateTax / freq, -stateTax / 12, -stateTax, pct(stateRate)],
